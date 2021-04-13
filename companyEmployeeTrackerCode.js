@@ -4,16 +4,17 @@ const inquirer = require('inquirer');
 const connection = mysql.createConnection({
   host: 'localhost',
 
-  // Your port; if not 3306
+  
   port: 3306,
 
-  // Your username
-  user: 'root',
+  
+  user: 'root@localhost',
 
-  // Be sure to update with your own MySQL password!
-  password: 'Puppydoggies',
+  
+  password: 'Puppydoggies2',
   database: 'employeetracker',
 });
+
 const runSearch = () => {
     inquirer
     .prompt({
@@ -59,10 +60,26 @@ const runSearch = () => {
           case 'View all Roles':
             viewAllRoles();
             break;
-  
-          default:
-            console.log(`Invalid action: ${answer.action}`);
-            break;
         }
+      });
+  };
+
+  const employeeSearch = () => {
+    inquirer
+      .prompt({
+        name: 'all employees',
+        type: 'input',
+        message: 'What artist would you like to search for?',
+      })
+      .then((answer) => {
+        const query = 'SELECT position, song, year FROM top5000 WHERE ?';
+        connection.query(query, { artist: answer.artist }, (err, res) => {
+          res.forEach(({ position, song, year }) => {
+            console.log(
+              `Position: ${position} || Song: ${song} || Year: ${year}`
+            );
+          });
+          runSearch();
+        });
       });
   };
