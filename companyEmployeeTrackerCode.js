@@ -8,11 +8,11 @@ const connection = mysql.createConnection({
   port: 3306,
 
   
-  user: 'root@localhost',
+  user: 'root',
 
   
   password: 'Puppydoggies2',
-  database: 'employeetracker',
+  database: 'employeetracker_db',
 });
 
 const runSearch = () => {
