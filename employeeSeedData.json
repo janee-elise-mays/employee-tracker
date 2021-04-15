@@ -1,0 +1,58 @@
+[
+    {
+      "first": "Rebecca",
+      "last": "Diroll",
+      "title": "Sales Lead",
+      "department": "Sales",
+      "salary": 100000,
+      "manager": "Mo Ager"
+    },
+    {
+      "first": "Kristen",
+      "last": "Picard",
+      "title": "Salesperson",
+      "department": "Sales",
+      "salary": 80000,
+      "manager": "null"
+    },
+    {
+        "first": "Heather",
+        "last": "Rushmore Koren",
+        "title": "Lead Engineer",
+        "department": "Engineering",
+        "salary": 150000,
+        "manager": "Mo Ager"
+    },
+    {
+        "first": "Cristina",
+        "last": "Maze",
+        "title": "Software Engineer",
+        "department": "Engineering",
+        "salary": 120000,
+        "manager": "Janee' Mays"
+    },
+    {
+        "first": "Reagan",
+        "last": "Rogers",
+        "title": "Accountant",
+        "department": "Finance",
+        "salary": 125000,
+        "manager": "Mo Ager"
+    },
+    {
+        "first": "Corrinne",
+        "last": "Worden",
+        "title": "Legal Team Lead",
+        "department": "Legal",
+        "salary": 250000,
+        "manager": "Janee' Mays"
+    }
+    {
+        "first": "Esar",
+        "last": "Behlum",
+        "title": "Lawyer",
+        "department": "Legal",
+        "salary": 190000,
+        "manager": "null"
+    }
+  ]

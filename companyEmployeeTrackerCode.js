@@ -35,29 +35,63 @@ const runSearch = () => {
       // based on their answer, either call functions
       if (answer.action === 'View all employees') {
         viewAll();
-      } else if (answer.postOrBid === 'View all employees By Department') {
+      } else if (answer.action === 'View all employees By Department') {
         departmentSearch();
-      } else if (answer.postOrBid === 'View all employees By Manager') {
+      } else if (answer.action === 'View all employees By Manager') {
         managerSearch();
-      } else if (answer.postOrBid === 'Add Employee') {
+      } else if (answer.action === 'Add Employee') {
         addEmployee();
-      } else if (answer.postOrBid === 'Update Employee Manager') {
+      } else if (answer.action === 'Update Employee Manager') {
         updateEmployee();
-      } else if (answer.postOrBid === 'View all Roles') {
+      } else if (answer.action === 'View all Roles') {
         viewRole();
       } else {
         connection.end();
       }
     });
 };
-
-  const employeeSearch = () => {
+// function to handle posting new employee
+  const addEmployee = () => {
     inquirer
       .prompt({
-        name: 'all employees',
+        name: 'first',
         type: 'input',
-        message: 'What artist would you like to search for?',
-      })
+        message: 'What is the employees first name?',
+      },
+      {
+        name: 'last',
+        type: 'input',
+        message: 'What is the employees last name?',
+      },
+      {
+        name: 'role',
+        type: 'list',
+        message: 'What is the employees role?',
+        choices: [
+          'Sales Lead',
+          'Salesperson',
+          'Lead Engineer',
+          'Software Engineer',
+          'Accountant',
+          'Legal Team Lead',
+          'Lawyer',
+        ],
+      },
+      {
+        name: 'role',
+        type: 'list',
+        message: "Who's the employee's manager?",
+        choices: [
+          'Sales Lead',
+          'Salesperson',
+          'Lead Engineer',
+          'Software Engineer',
+          'Accountant',
+          'Legal Team Lead',
+          'Lawyer',
+        ],
+      },
+      )
       .then((answer) => {
         const query = 'SELECT position, song, year FROM top5000 WHERE ?';
         connection.query(query, { artist: answer.artist }, (err, res) => {
