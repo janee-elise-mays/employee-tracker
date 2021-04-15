@@ -49,6 +49,26 @@ const runSearch = inquirer.prompt([
         connection.end();
       }
     });
+
+// function to view all employees
+function viewAll()
+
+// function to search employees by their department
+function departmentSearch()
+
+// function to search employees by manager
+function managerSearch()
+
+// function to add an employee
+function addEmployee()
+
+// function to update the employee manager
+function updateEmployee()
+
+// function to view all roles
+function viewRole()
+
+
 // function to handle posting new employee
   // const addEmployee = () => {
   //   inquirer
