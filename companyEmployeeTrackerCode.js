@@ -19,7 +19,7 @@ const runSearch = () => {
     inquirer
     .prompt({
       name: 'action',
-      type: 'rawlist',
+      type: 'list',
       message: 'What would you like to do?',
       choices: [
         'View all employees',
@@ -29,40 +29,27 @@ const runSearch = () => {
         'Update Employee Role',
         'Update Employee Manager',
         'View all Roles',
-      ],
-      })
+      ],})
+
       .then((answer) => {
-        switch (answer.action) {
-          case 'View all employees':
-            employeeSearch();
-            break;
-  
-          case 'View all employees By Department':
-            departmentSearch();
-            break;
-  
-          case 'View all employees By Manager':
-            managerSearch();
-            break;
-  
-          case 'Add Employee':
-            addEmployee();
-            break;
-  
-          case 'Update Employee Role':
-            updateEmployeeRole();
-            break;
-
-          case 'Update Employee Manager':
-            updateEmployeeManager();
-            break;
-
-          case 'View all Roles':
-            viewAllRoles();
-            break;
-        }
-      });
-  };
+      // based on their answer, either call functions
+      if (answer.action === 'View all employees') {
+        viewAll();
+      } else if (answer.postOrBid === 'View all employees By Department') {
+        departmentSearch();
+      } else if (answer.postOrBid === 'View all employees By Manager') {
+        managerSearch();
+      } else if (answer.postOrBid === 'Add Employee') {
+        addEmployee();
+      } else if (answer.postOrBid === 'Update Employee Manager') {
+        updateEmployee();
+      } else if (answer.postOrBid === 'View all Roles') {
+        viewRole();
+      } else {
+        connection.end();
+      }
+    });
+};
 
   const employeeSearch = () => {
     inquirer
