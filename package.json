@@ -4,7 +4,8 @@
   "description": "A solution for managing a company's employees using node, inquirer, and MySQL.",
   "main": "companyEmployeeTrackerCode.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node employeeTrackerDBConnection.js"
   },
   "repository": {
     "type": "git",
