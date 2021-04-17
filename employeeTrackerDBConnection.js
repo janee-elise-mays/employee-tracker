@@ -135,13 +135,9 @@ const managerSearch = () => {
         type: 'list',
         message: "Who's the employee's manager?",
         choices: [
-          'Sales Lead',
-          'Salesperson',
-          'Lead Engineer',
-          'Software Engineer',
-          'Accountant',
-          'Legal Team Lead',
-          'Lawyer',
+          'Mo Ager',
+          'Janee Mays',
+          'null',
         ],
       },
     ])
