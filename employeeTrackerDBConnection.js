@@ -189,6 +189,7 @@ const addRole = () => {
       );
     });
 });
+};
 
 // function to add an employee
 const addEmployee = () => {
@@ -239,9 +240,6 @@ const addEmployee = () => {
           });
       })
   },)
-
-
-}
 
 runSearch();
 }
