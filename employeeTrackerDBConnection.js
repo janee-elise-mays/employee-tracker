@@ -80,8 +80,8 @@ const viewRole = () => {
       'Lawyer',]
   })
   .then((answer) => {
-    const query = 'SELECT DepartmentName FROM employee WHERE ?';
-    connection.query(query, { department: answer.department }, (err, res) => {
+    const query = 'SELECT EmployeeTitle FROM role WHERE ?';
+    connection.query(query, { viewRole: answer.role }, (err, res) => {
       runSearch();
     });
   });
@@ -105,6 +105,60 @@ const viewDepartment = () => {
     connection.query(query, { department: answer.department }, (err, res) => {
       runSearch();
     });
+  });
+};
+
+// function to add an employee department
+const addDepartment = () => {
+  inquirer
+    .prompt([
+    {
+      name: 'addDeparment',
+      type: 'input',
+      message: 'What department would you like to add?',
+    },
+  ])
+  .then((answer) => {
+    // when finished prompting, insert a new department into the db with that info
+    connection.query(
+      'INSERT INTO department SET ?',
+      {
+        department: answer.DepartmentName,
+      },
+      (err) => {
+        if (err) throw err;
+        console.log('Your department was added successfully!');
+        // re-prompt the user to begin again
+        runSearch();
+      }
+    );
+  });
+};
+
+// function to add an employee role
+const addRole = () => {
+  inquirer
+    .prompt([
+    {
+      name: 'addRole',
+      type: 'input',
+      message: 'What employee role would you like to add?',
+    },
+  ])
+  .then((answer) => {
+    // when finished prompting, insert a new role into the db with that info
+    connection.query(
+      'INSERT INTO role SET ?',
+      {
+        role: answer.role,
+      },
+      (err) => {
+        if (err) throw err;
+        console.log('Your employee was added successfully!');
+        // re-prompt the user to begin again
+        runSearch();
+      }
+    );
   });
 };
 
@@ -160,21 +214,15 @@ const viewDepartment = () => {
         (err) => {
           if (err) throw err;
           console.log('Your employee was added successfully!');
-          // re-prompt the user for if they want to bid or post
+          // re-prompt the user to begin again
           runSearch();
         }
       );
     });
-  };
+};
 
-
-// function to update the employee manager
-const updateEmployee = () => {
-  ('SELECT * FROM department')
-}
-
-// function to view all roles
-const viewRole = () => {
+// function to update an employee role
+const updateRole = () => {
   ('SELECT * FROM department')
 }
 
