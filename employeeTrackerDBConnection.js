@@ -57,62 +57,93 @@ const runSearch = inquirer.prompt([
     });
 
 // function to view all employees
-function viewAll()
+function viewAll() => {
+  ('SELECT * FROM employee')
+}
 
 // function to search employees by their department
-function departmentSearch()
+function departmentSearch() => {
+  ('SELECT * FROM department')
+}
 
 // function to search employees by manager
-function managerSearch()
+function managerSearch() => {
+  ('SELECT * FROM department')
+}
 
 // function to add an employee
-function addEmployee()
+  const addEmployee = () => {
+    inquirer
+      .prompt([
+      {
+        name: 'first',
+        type: 'input',
+        message: 'What is the employees first name?',
+      },
+      {
+        name: 'last',
+        type: 'input',
+        message: 'What is the employees last name?',
+      },
+      {
+        name: 'role',
+        type: 'list',
+        message: 'What is the employees role?',
+        choices: [
+          'Sales Lead',
+          'Salesperson',
+          'Lead Engineer',
+          'Software Engineer',
+          'Accountant',
+          'Legal Team Lead',
+          'Lawyer',
+        ],
+      },
+      {
+        name: 'manager',
+        type: 'list',
+        message: "Who's the employee's manager?",
+        choices: [
+          'Sales Lead',
+          'Salesperson',
+          'Lead Engineer',
+          'Software Engineer',
+          'Accountant',
+          'Legal Team Lead',
+          'Lawyer',
+        ],
+      },
+    ])
+    .then((answer) => {
+      // when finished prompting, insert a new employee into the db with that info
+      connection.query(
+        'INSERT INTO employee SET ?',
+        {
+          first_name: answer.first,
+          last_name: answer.last,
+          role: answer.role,
+          manager: answer.manager,
+        },
+        (err) => {
+          if (err) throw err;
+          console.log('Your employee was added successfully!');
+          // re-prompt the user for if they want to bid or post
+          start();
+        }
+      );
+    });
+  };
+
 
 // function to update the employee manager
-function updateEmployee()
+function updateEmployee() => {
+  ('SELECT * FROM department')
+}
 
 // function to view all roles
-function viewRole()
+function viewRole() => {
+  ('SELECT * FROM department')
+}
 
 
 // function to handle posting new employee
-  // const addEmployee = () => {
-  //   inquirer
-  //     .prompt({
-  //       name: 'first',
-  //       type: 'input',
-  //       message: 'What is the employees first name?',
-  //     },
-  //     {
-  //       name: 'last',
-  //       type: 'input',
-  //       message: 'What is the employees last name?',
-  //     },
-  //     {
-  //       name: 'role',
-  //       type: 'list',
-  //       message: 'What is the employees role?',
-  //       choices: [
-  //         'Sales Lead',
-  //         'Salesperson',
-  //         'Lead Engineer',
-  //         'Software Engineer',
-  //         'Accountant',
-  //         'Legal Team Lead',
-  //         'Lawyer',
-  //       ],
-  //     },
-  //     {
-  //       name: 'role',
-  //       type: 'list',
-  //       message: "Who's the employee's manager?",
-  //       choices: [
-  //         'Sales Lead',
-  //         'Salesperson',
-  //         'Lead Engineer',
-  //         'Software Engineer',
-  //         'Accountant',
-  //         'Legal Team Lead',
-  //         'Lawyer',
-  //       ],
-  //     };
