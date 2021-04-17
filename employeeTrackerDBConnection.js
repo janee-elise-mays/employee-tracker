@@ -84,8 +84,23 @@ const departmentSearch = () => {
 
 // function to search employees by manager
 const managerSearch = () => {
-  ('SELECT * FROM department')
-}
+  inquirer
+  .prompt({
+    name: 'managerSearch',
+    type: 'list',
+    message: 'Which manager would you like to search?',
+    choices: [
+      'Mo Ager',
+      'Janee Mays',
+      'null',]
+  })
+  .then((answer) => {
+    const query = 'SELECT manager_id FROM employee WHERE ?';
+    connection.query(query, { managerSearch: answer.managerSearch }, (err, res) => {
+      runSearch();
+    });
+  });
+};
 
 // function to add an employee
   const addEmployee = () => {
