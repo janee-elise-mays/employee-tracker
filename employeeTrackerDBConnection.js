@@ -27,8 +27,8 @@ const runSearch = () => {
     message: 'What would you like to do?',
     choices: [
       'View all employees',
-      'View all employees by Role',
-      'View all employees By Department',
+      'View all Roles',
+      'View all Department',
       'Add Department',
       'Add employee Role',
       'Add employee',
@@ -41,9 +41,9 @@ const runSearch = () => {
     // based on their answer, either call functions
     if (answer.action === 'View all employees') {
       viewAll();
-    } else if (answer.action === 'View all employees By Role') {
+    } else if (answer.action === 'View all Roles') {
       viewRole();
-    } else if (answer.action === 'View all employees By Department') {
+    } else if (answer.action === 'View all Departments') {
       viewDepartment();
     } else if (answer.action === 'Add Department') {
       addDepartment();
@@ -71,47 +71,21 @@ const viewAll = () => {
 
 // function to view employees in a certain role
 const viewRole = () => {
-  inquirer
-    .prompt({
-      name: 'viewRole',
-      type: 'list',
-      message: 'Which employee role would you like to search?',
-      choices: [
-        'Sales Lead',
-        'Salesperson',
-        'Lead Engineer',
-        'Software Engineer',
-        'Accountant',
-        'Legal Team Lead',
-        'Lawyer',]
-    })
-    .then((answer) => {
-      const query = 'SELECT EmployeeTitle FROM role WHERE ?';
-      connection.query(query, [answer.role], (err, res) => {
-        runSearch();
-      });
-    });
+  connection.query('SELECT * FROM role', (err, results) => {
+    // if(err) throw err;
+    console.table(results);
+  }
+  )
+  runSearch()
 };
 
 // function to view employees by department
 const viewDepartment = () => {
-  inquirer
-    .prompt({
-      name: 'department',
-      type: 'list',
-      message: 'Which department would you like to search?',
-      choices: [
-        'Sales',
-        'Engineering',
-        'Finance',
-        'Legal',]
-    })
-    .then((answer) => {
-      const query = 'SELECT DepartmentName FROM employee WHERE ?';
-      connection.query(query, { department: answer.department }, (err, res) => {
-        runSearch();
-      });
-    });
+  connection.query('SELECT * FROM department', (err, results) => {
+    // if(err) throw err;
+    console.table(results);
+  }
+  )
 };
 
 // function to add an employee department
