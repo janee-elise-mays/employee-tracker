@@ -58,8 +58,8 @@ const runSearch = inquirer.prompt([
 
 // function to view all employees
 const viewAll = () => {
-  ('SELECT * FROM employee')
-}
+    connection.query(query, 'SELECT * FROM employee',
+    )};
 
 // function to search employees by their department
 const departmentSearch = () => {
