@@ -15,6 +15,12 @@ const connection = mysql.createConnection({
   database: 'employeetracker_db',
 });
 
+connection.connect((err) => {
+  if (err) throw err;
+  console.log(`connected as id ${connection.threadId}`);
+  connection.end();
+});
+
 const runSearch = inquirer.prompt([
   {
       name: 'action',
