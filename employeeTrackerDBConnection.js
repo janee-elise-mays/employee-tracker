@@ -41,17 +41,17 @@ const runSearch = inquirer.prompt([
       // based on their answer, either call functions
       if (answer.action === 'View all employees') {
         viewAll();
-      } else if (answer.action === 'View all employees By Department') {
+      } else if (answer.action === 'View all employees By Role') {
         viewRole();
-      } else if (answer.action === 'View all employees By Manager') {
+      } else if (answer.action === 'View all employees By Department') {
         viewDepartment();
-      } else if (answer.action === 'Add Employee') {
+      } else if (answer.action === 'Add Department') {
         addDepartment();
-      } else if (answer.action === 'Update Employee Manager') {
+      } else if (answer.action === 'Add employee Role') {
         addRole();
-      } else if (answer.action === 'View all Roles') {
+      } else if (answer.action === 'Add employee') {
         addEmployee();
-      } else if (answer.action === 'View all Roles') {
+      } else if (answer.action === 'Update Employee Role') {
         updateRole();
       } else {
         connection.end();
@@ -63,7 +63,7 @@ const viewAll = () => {
     connection.query(query, 'SELECT * FROM employee',
     )};
 
-// function to search employees by their department
+// function to view employees in a certain role
 const viewRole = () => {
   inquirer
   .prompt({
@@ -87,7 +87,7 @@ const viewRole = () => {
   });
 };
 
-// function to search employees by manager
+// function to view employees by department
 const viewDepartment = () => {
   inquirer
   .prompt({
@@ -190,16 +190,6 @@ const addRole = () => {
           'Lawyer',
         ],
       },
-      {
-        name: 'manager',
-        type: 'list',
-        message: "Who's the employee's manager?",
-        choices: [
-          'Mo Ager',
-          'Janee Mays',
-          'null',
-        ],
-      },
     ])
     .then((answer) => {
       // when finished prompting, insert a new employee into the db with that info
@@ -208,8 +198,7 @@ const addRole = () => {
         {
           first_name: answer.first,
           last_name: answer.last,
-          role: answer.role,
-          manager: answer.manager,
+          role: answer.role_id,
         },
         (err) => {
           if (err) throw err;
@@ -224,5 +213,5 @@ const addRole = () => {
 // function to update an employee role
 const updateRole = () => {
   ('SELECT * FROM department')
-}
+};
 
