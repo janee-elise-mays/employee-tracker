@@ -129,7 +129,7 @@ const addDepartment = () => {
       connection.query(
         'INSERT INTO department SET ?',
         {
-          department: answer.DepartmentName,
+          DepartmentName: answer.addDepartment,
         },
         (err) => {
           if (err) throw err;
@@ -143,13 +143,32 @@ const addDepartment = () => {
 
 // function to add an employee role
 const addRole = () => {
+  connection.query('SELECT * FROM department', (err, departments) => {
+    if (err) console.log(err);
+    departments = departments.map(department => {
+      return {
+        name: department.DepartmentName,
+        value: department.ID
+      }
+    })
   // ask for title, salary, department
   inquirer
     .prompt([
       {
         name: 'addRole',
         type: 'input',
-        message: 'What employee role would you like to add?',
+        message: 'What is the title of the new Role?',
+      },
+      {
+        name: 'addSalary',
+        type: 'input',
+        message: 'What is the salary of the new Role?',
+      },
+      {
+        name: 'addDepartmentRole',
+        type: 'list',
+        message: 'Which department is this role apart of?',
+        choices: departments,
       },
     ])
     .then((answer) => {
@@ -157,7 +176,9 @@ const addRole = () => {
       connection.query(
         'INSERT INTO role SET ?',
         {
-          role: answer.role,
+          EmployeeTitle: answer.addrole,
+          EmployeeSalary: answer.addSalary,
+          EmployeeDeparment_id: answer.addDepartmentRole,
         },
         (err) => {
           if (err) throw err;
@@ -167,7 +188,7 @@ const addRole = () => {
         }
       );
     });
-};
+});
 
 // function to add an employee
 const addEmployee = () => {
@@ -223,3 +244,4 @@ const addEmployee = () => {
 }
 
 runSearch();
+}
