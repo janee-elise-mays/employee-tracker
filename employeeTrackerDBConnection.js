@@ -63,8 +63,24 @@ const viewAll = () => {
 
 // function to search employees by their department
 const departmentSearch = () => {
-  ('SELECT * FROM department')
-}
+  inquirer
+  .prompt({
+    name: 'department',
+    type: 'list',
+    message: 'Which department would you like to search?',
+    choices: [
+      'Sales',
+      'Engineering',
+      'Finance',
+      'Legal',]
+  })
+  .then((answer) => {
+    const query = 'SELECT role_id FROM employee WHERE ?';
+    connection.query(query, { department: answer.department }, (err, res) => {
+      runSearch();
+    });
+  });
+};
 
 // function to search employees by manager
 const managerSearch = () => {
@@ -145,5 +161,3 @@ const viewRole = () => {
   ('SELECT * FROM department')
 }
 
-
-// function to handle posting new employee
