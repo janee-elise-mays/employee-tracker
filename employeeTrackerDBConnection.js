@@ -28,12 +28,12 @@ const runSearch = inquirer.prompt([
       message: 'What would you like to do?',
       choices: [
         'View all employees',
+        'View all employees by Role',
         'View all employees By Department',
-        'View all employees By Manager',
-        'Add Employee',
-        'Update Employee Role',
-        'Update Employee Manager',
-        'View all Roles',]
+        'Add Department',
+        'Add employee Role',
+        'Add employee',
+        'Update Employee Role',]
   }
       ])
 
@@ -42,15 +42,17 @@ const runSearch = inquirer.prompt([
       if (answer.action === 'View all employees') {
         viewAll();
       } else if (answer.action === 'View all employees By Department') {
-        departmentSearch();
-      } else if (answer.action === 'View all employees By Manager') {
-        managerSearch();
-      } else if (answer.action === 'Add Employee') {
-        addEmployee();
-      } else if (answer.action === 'Update Employee Manager') {
-        updateEmployee();
-      } else if (answer.action === 'View all Roles') {
         viewRole();
+      } else if (answer.action === 'View all employees By Manager') {
+        viewDepartment();
+      } else if (answer.action === 'Add Employee') {
+        addDepartment();
+      } else if (answer.action === 'Update Employee Manager') {
+        addRole();
+      } else if (answer.action === 'View all Roles') {
+        addEmployee();
+      } else if (answer.action === 'View all Roles') {
+        updateRole();
       } else {
         connection.end();
       }
@@ -62,7 +64,31 @@ const viewAll = () => {
     )};
 
 // function to search employees by their department
-const departmentSearch = () => {
+const viewRole = () => {
+  inquirer
+  .prompt({
+    name: 'viewRole',
+    type: 'list',
+    message: 'Which employee role would you like to search?',
+    choices: [
+      'Sales Lead',
+      'Salesperson',
+      'Lead Engineer',
+      'Software Engineer',
+      'Accountant',
+      'Legal Team Lead',
+      'Lawyer',]
+  })
+  .then((answer) => {
+    const query = 'SELECT DepartmentName FROM employee WHERE ?';
+    connection.query(query, { department: answer.department }, (err, res) => {
+      runSearch();
+    });
+  });
+};
+
+// function to search employees by manager
+const viewDepartment = () => {
   inquirer
   .prompt({
     name: 'department',
@@ -75,28 +101,8 @@ const departmentSearch = () => {
       'Legal',]
   })
   .then((answer) => {
-    const query = 'SELECT role_id FROM employee WHERE ?';
+    const query = 'SELECT DepartmentName FROM employee WHERE ?';
     connection.query(query, { department: answer.department }, (err, res) => {
-      runSearch();
-    });
-  });
-};
-
-// function to search employees by manager
-const managerSearch = () => {
-  inquirer
-  .prompt({
-    name: 'managerSearch',
-    type: 'list',
-    message: 'Which manager would you like to search?',
-    choices: [
-      'Mo Ager',
-      'Janee Mays',
-      'null',]
-  })
-  .then((answer) => {
-    const query = 'SELECT manager_id FROM employee WHERE ?';
-    connection.query(query, { managerSearch: answer.managerSearch }, (err, res) => {
       runSearch();
     });
   });
@@ -155,7 +161,7 @@ const managerSearch = () => {
           if (err) throw err;
           console.log('Your employee was added successfully!');
           // re-prompt the user for if they want to bid or post
-          start();
+          runSearch();
         }
       );
     });

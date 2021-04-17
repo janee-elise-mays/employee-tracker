@@ -52,6 +52,14 @@ VALUES (6, "Legal Team Lead", 250000, 4);
 INSERT INTO role (id, EmployeeTitle, EmployeeSalary, EmployeeDeparment_id)
 VALUES (7, "Lawyer", 190000, 4);
 
+SELECT department.DepartmentName, role.EmployeeDeparment_id
+FROM role
+INNER JOIN department ON role.EmployeeDeparment_id= department.ID;
+
+SELECT employee.role_id, role.EmployeeTitle
+FROM role
+INNER JOIN employee ON role.ID= employee.role_id
+
 
 
 [
