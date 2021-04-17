@@ -57,17 +57,17 @@ const runSearch = inquirer.prompt([
     });
 
 // function to view all employees
-function viewAll() => {
+const viewAll = () => {
   ('SELECT * FROM employee')
 }
 
 // function to search employees by their department
-function departmentSearch() => {
+const departmentSearch = () => {
   ('SELECT * FROM department')
 }
 
 // function to search employees by manager
-function managerSearch() => {
+const managerSearch = () => {
   ('SELECT * FROM department')
 }
 
@@ -136,12 +136,12 @@ function managerSearch() => {
 
 
 // function to update the employee manager
-function updateEmployee() => {
+const updateEmployee = () => {
   ('SELECT * FROM department')
 }
 
 // function to view all roles
-function viewRole() => {
+const viewRole = () => {
   ('SELECT * FROM department')
 }
 
