@@ -125,7 +125,7 @@ const addRole = () => {
         value: department.ID
       }
     })
-  // ask for title, salary, department
+    
   inquirer
     .prompt([
       {
@@ -215,5 +215,5 @@ const addEmployee = () => {
       })
   },)
 
-runSearch();
+  runSearch();
 }
