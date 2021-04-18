@@ -22,42 +22,42 @@ connection.connect((err) => {
 
 const runSearch = () => {
   inquirer.prompt([
-  {
-    name: 'action',
-    type: 'list',
-    message: 'What would you like to do?',
-    choices: [
-      'View all employees',
-      'View all Roles',
-      'View all Departments',
-      'Add Department',
-      'Add employee Role',
-      'Add employee',
-      'Update Employee Role',
-      'I am done',]
-  }
-])
-
-  .then((answer) => {
-    // based on their answer, either call functions
-    if (answer.action === 'View all employees') {
-      viewAll();
-    } else if (answer.action === 'View all Roles') {
-      viewRole();
-    } else if (answer.action === 'View all Departments') {
-      viewDepartment();
-    } else if (answer.action === 'Add Department') {
-      addDepartment();
-    } else if (answer.action === 'Add employee Role') {
-      addRole();
-    } else if (answer.action === 'Add employee') {
-      addEmployee();
-    } else if (answer.action === 'Update Employee Role') {
-      updateRole();
-    } else {
-      connection.end();
+    {
+      name: 'action',
+      type: 'list',
+      message: 'What would you like to do?',
+      choices: [
+        'View all employees',
+        'View all Roles',
+        'View all Departments',
+        'Add Department',
+        'Add employee Role',
+        'Add employee',
+        'Update Employee Role',
+        'I am done',]
     }
-  });
+  ])
+
+    .then((answer) => {
+      // based on their answer, either call functions
+      if (answer.action === 'View all employees') {
+        viewAll();
+      } else if (answer.action === 'View all Roles') {
+        viewRole();
+      } else if (answer.action === 'View all Departments') {
+        viewDepartment();
+      } else if (answer.action === 'Add Department') {
+        addDepartment();
+      } else if (answer.action === 'Add employee Role') {
+        addRole();
+      } else if (answer.action === 'Add employee') {
+        addEmployee();
+      } else if (answer.action === 'Update Employee Role') {
+        updateRole();
+      } else {
+        connection.end();
+      }
+    });
 }
 
 // function to view all employees
@@ -124,91 +124,93 @@ const addRole = () => {
         name: department.DepartmentName,
         value: department.ID,
       };
-  });
-
-  inquirer
-    .prompt([
-      {
-        name: 'addRole',
-        type: 'input',
-        message: 'What is the title of the new Role?',
-      },
-      {
-        name: 'addSalary',
-        type: 'input',
-        message: 'What is the salary of the new Role?',
-      },
-      {
-        name: 'addDepartmentRole',
-        type: 'list',
-        message: 'Which department is this role apart of?',
-        choices: departments,
-      },
-    ])
-    .then((answer) => {
-      // when finished prompting, insert a new role into the db with that info
-      connection.query(
-        'INSERT INTO role SET ?',
-        {
-          EmployeeTitle: answer.addRole,
-          EmployeeSalary: answer.addSalary,
-          EmployeeDeparment_id: answer.addDepartmentRole,
-        },
-        (err) => {
-          if (err) throw err;
-          console.log('You added a Role successfully!');
-          // re-prompt the user to begin again
-          runSearch();
-        });
     });
-});
-
-// function to add an employee
-const addEmployee = () => {
-  connection.query('SELECT * FROM role', (err, roles) => {
-    if (err) console.log(err);
-    roles = roles.map(role => {
-      return {
-        name: role.EmployeeTitle,
-        value: role.ID
-      }
-    })
 
     inquirer
       .prompt([
         {
-          name: 'first',
+          name: 'addRole',
           type: 'input',
-          message: 'What is the employees first name?',
+          message: 'What is the title of the new Role?',
         },
         {
-          name: 'last',
+          name: 'addSalary',
           type: 'input',
-          message: 'What is the employees last name?',
+          message: 'What is the salary of the new Role?',
         },
         {
-          name: 'role',
+          name: 'addDepartmentRole',
           type: 'list',
-          message: 'What is the employees role?',
-          choices: roles
+          message: 'Which department is this role apart of?',
+          choices: departments,
         },
       ])
-
       .then((answer) => {
-        console.log(answer.role)
-        // when finished prompting, insert a new employee into the db with that info
+        // when finished prompting, insert a new role into the db with that info
         connection.query(
-          'INSERT INTO employee SET ?',
+          'INSERT INTO role SET ?',
           {
-            first_name: answer.first,
-            last_name: answer.last,
-            role_id: answer.role,
+            EmployeeTitle: answer.addRole,
+            EmployeeSalary: answer.addSalary,
+            EmployeeDeparment_id: answer.addDepartmentRole,
           },
           (err) => {
             if (err) throw err;
-            console.log('Your employee was added successfully!');
+            console.log('You added a Role successfully!');
             // re-prompt the user to begin again
             runSearch();
           });
+      });
+  });
+};
+  // function to add an employee
+  const addEmployee = () => {
+    connection.query('SELECT * FROM role', (err, roles) => {
+      if (err) console.log(err);
+      roles = roles.map(role => {
+        return {
+          name: role.EmployeeTitle,
+          value: role.ID
+        }
       })
-},)}}
+
+      inquirer
+        .prompt([
+          {
+            name: 'first',
+            type: 'input',
+            message: 'What is the employees first name?',
+          },
+          {
+            name: 'last',
+            type: 'input',
+            message: 'What is the employees last name?',
+          },
+          {
+            name: 'role',
+            type: 'list',
+            message: 'What is the employees role?',
+            choices: roles
+          },
+        ])
+
+        .then((answer) => {
+          console.log(answer.role)
+          // when finished prompting, insert a new employee into the db with that info
+          connection.query(
+            'INSERT INTO employee SET ?',
+            {
+              first_name: answer.first,
+              last_name: answer.last,
+              role_id: answer.role,
+            },
+            (err) => {
+              if (err) throw err;
+              console.log('Your employee was added successfully!');
+              // re-prompt the user to begin again
+              runSearch();
+            },
+          )
+        });
+    })
+  }
