@@ -244,7 +244,7 @@ const updateRole = () => {
       .then((answer) => {
         // when finished prompting, insert a new role into the db with that info
         connection.query(
-          'UPDATE role SET?',
+          'UPDATE role WHERE SET?',
           {
             EmployeeTitle: answer.addRole,
             EmployeeSalary: answer.addSalary,
