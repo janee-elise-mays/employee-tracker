@@ -163,54 +163,98 @@ const addRole = () => {
       });
   });
 };
-  // function to add an employee
-  const addEmployee = () => {
-    connection.query('SELECT * FROM role', (err, roles) => {
-      if (err) console.log(err);
-      roles = roles.map(role => {
-        return {
-          name: role.EmployeeTitle,
-          value: role.ID
-        }
-      })
-
-      inquirer
-        .prompt([
-          {
-            name: 'first',
-            type: 'input',
-            message: 'What is the employees first name?',
-          },
-          {
-            name: 'last',
-            type: 'input',
-            message: 'What is the employees last name?',
-          },
-          {
-            name: 'role',
-            type: 'list',
-            message: 'What is the employees role?',
-            choices: roles
-          },
-        ])
-
-        .then((answer) => {
-          console.log(answer.role)
-          // when finished prompting, insert a new employee into the db with that info
-          connection.query(
-            'INSERT INTO employee SET ?',
-            {
-              first_name: answer.first,
-              last_name: answer.last,
-              role_id: answer.role,
-            },
-            (err) => {
-              if (err) throw err;
-              console.log('Your employee was added successfully!');
-              // re-prompt the user to begin again
-              runSearch();
-            },
-          )
-        });
+// function to add an employee
+const addEmployee = () => {
+  connection.query('SELECT * FROM role', (err, roles) => {
+    if (err) console.log(err);
+    roles = roles.map(role => {
+      return {
+        name: role.EmployeeTitle,
+        value: role.ID
+      }
     })
-  }
+
+    inquirer
+      .prompt([
+        {
+          name: 'first',
+          type: 'input',
+          message: 'What is the employees first name?',
+        },
+        {
+          name: 'last',
+          type: 'input',
+          message: 'What is the employees last name?',
+        },
+        {
+          name: 'role',
+          type: 'list',
+          message: 'What is the employees role?',
+          choices: roles
+        },
+      ])
+
+      .then((answer) => {
+        console.log(answer.role)
+        // when finished prompting, insert a new employee into the db with that info
+        connection.query(
+          'INSERT INTO employee SET ?',
+          {
+            first_name: answer.first,
+            last_name: answer.last,
+            role_id: answer.role,
+          },
+          (err) => {
+            if (err) throw err;
+            console.log('Your employee was added successfully!');
+            // re-prompt the user to begin again
+            runSearch();
+          },
+        )
+      });
+  })
+}
+
+const updateRole = () => {
+  // Gather all current roles
+  connection.query('SELECT * FROM role', (err, roles) => {
+    if (err) console.log(err);
+    roles = roles.map(role => {
+      return {
+        name: role.EmployeeTitle,
+        value: role.ID
+      }
+    })
+    // Identify which role should be updated
+    inquirer
+      .prompt([
+        {
+          name: 'roleUpdate',
+          type: 'list',
+          message: 'Which role would you like to update?',
+          choices: roles
+        },
+        {
+          name: 'updatedRole',
+          type: 'input',
+          message: 'What is the updated role?',
+        },
+      ])
+      .then((answer) => {
+        // when finished prompting, insert a new role into the db with that info
+        connection.query(
+          'UPDATE role SET?',
+          {
+            EmployeeTitle: answer.addRole,
+            EmployeeSalary: answer.addSalary,
+            EmployeeDeparment_id: answer.addDepartmentRole,
+          },
+          (err) => {
+            if (err) throw err;
+            console.log('You updated a Role successfully!');
+            // re-prompt the user to begin again
+            runSearch();
+          });
+      });
+  })
+}
