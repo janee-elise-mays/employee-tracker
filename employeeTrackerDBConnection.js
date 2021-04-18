@@ -122,9 +122,9 @@ const addRole = () => {
     departments = departments.map(department => {
       return {
         name: department.DepartmentName,
-        value: department.ID
-      }
-    },
+        value: department.ID,
+      };
+  });
 
   inquirer
     .prompt([
@@ -150,7 +150,7 @@ const addRole = () => {
       connection.query(
         'INSERT INTO role SET ?',
         {
-          EmployeeTitle: answer.addrole,
+          EmployeeTitle: answer.addRole,
           EmployeeSalary: answer.addSalary,
           EmployeeDeparment_id: answer.addDepartmentRole,
         },
@@ -159,11 +159,9 @@ const addRole = () => {
           console.log('You added a Role successfully!');
           // re-prompt the user to begin again
           runSearch();
-        },
-      );
-    }));
+        });
+    });
 });
-};
 
 // function to add an employee
 const addEmployee = () => {
@@ -213,7 +211,4 @@ const addEmployee = () => {
             runSearch();
           });
       })
-  },)
-
-  runSearch();
-}
+},)}}
