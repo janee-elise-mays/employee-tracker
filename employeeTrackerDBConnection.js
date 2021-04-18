@@ -16,7 +16,8 @@ const connection = mysql.createConnection({
 
 connection.connect((err) => {
   if (err) throw err;
-  console.log(`connected as id ${connection.threadId}`);
+  runSearch();
+  // console.log(`connected as id ${connection.threadId}`);
 });
 
 const runSearch = () => {
@@ -28,7 +29,7 @@ const runSearch = () => {
     choices: [
       'View all employees',
       'View all Roles',
-      'View all Department',
+      'View all Departments',
       'Add Department',
       'Add employee Role',
       'Add employee',
@@ -110,8 +111,7 @@ const addDepartment = () => {
           console.log('Your department was added successfully!');
           // re-prompt the user to begin again
           runSearch();
-        }
-      );
+        });
     });
 };
 
@@ -124,8 +124,8 @@ const addRole = () => {
         name: department.DepartmentName,
         value: department.ID
       }
-    })
-    
+    },
+
   inquirer
     .prompt([
       {
@@ -159,9 +159,9 @@ const addRole = () => {
           console.log('You added a Role successfully!');
           // re-prompt the user to begin again
           runSearch();
-        }
+        },
       );
-    });
+    }));
 });
 };
 
