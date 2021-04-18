@@ -87,6 +87,7 @@ const viewDepartment = () => {
     console.table(results);
   }
   )
+  runSearch()
 };
 
 // function to add an employee department
