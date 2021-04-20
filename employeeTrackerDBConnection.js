@@ -95,7 +95,7 @@ const addDepartment = () => {
   inquirer
     .prompt([
       {
-        name: 'addDeparment',
+        name: 'addDepartment',
         type: 'input',
         message: 'What department would you like to add?',
       },
@@ -103,10 +103,10 @@ const addDepartment = () => {
     .then((answer) => {
       // when finished prompting, insert a new department into the db with that info
       connection.query(
-        'INSERT INTO department SET ?',
-        {
-          DepartmentName: answer.addDepartment,
-        },
+        'INSERT INTO department (DepartmentName) VALUES (?)',
+        [
+          answer.addDepartment,
+        ],
         (err) => {
           if (err) throw err;
           console.log('Your department was added successfully!');
