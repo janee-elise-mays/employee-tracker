@@ -242,14 +242,14 @@ const updateRole = () => {
         },
       ])
       .then((answer) => {
+        console.log(answer);
         // when finished prompting, insert a new role into the db with that info
-        connection.query(
-          'UPDATE role WHERE SET?',
-          {
-            EmployeeTitle: answer.addRole,
-            EmployeeSalary: answer.addSalary,
-            EmployeeDeparment_id: answer.addDepartmentRole,
-          },
+        connection.query( 
+          'UPDATE role SET EmployeeTitle =? WHERE ID =?',
+          [
+             answer.updatedRole,
+             answer.roleUpdate,
+          ],
           (err) => {
             if (err) throw err;
             console.log('You updated a Role successfully!');
